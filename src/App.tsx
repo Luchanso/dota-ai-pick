@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./App.css";
 import { heroes } from "dotaconstants";
-import data from './data.json';
+import data from "./data.json";
 
 const CDN = "http://cdn.dota2.com/";
 
@@ -12,16 +12,34 @@ type HeroProps = {
   onClick: (id: string | number) => void;
 };
 
-const getCounterPick = () => {
+const getCounterPick = (selected: (string | number)[]) => {
+  const heroScore = Object.keys(heroes).reduce(
+    (res, key) => {
+      res[key] = 0;
+      return res;
+    },
+    {} as any
+  );
 
-}
+   return selected.reduce((score, heroId) => {
+    const disadvantage = (data.find(
+      item => item.hero.toString() === heroId
+    ) as any).disadvantage;
+
+    return disadvantage.map(
+      ({ id, performance }: { id: string; performance: string }) => {
+        score[id] += parseFloat(performance);
+
+        return score;
+      }
+    );
+  }, heroScore);
+};
 
 const Hero = ({ heroId, onClick }: HeroProps) => (
   <div className="Hero" onClick={() => onClick(heroId)}>
     <img src={CDN + heroes[heroId].img} className="HeroImage" alt="hero" />
-    <p className="HeroName">
-      {heroes[heroId].localized_name}
-    </p>
+    <p className="HeroName">{heroes[heroId].localized_name}</p>
   </div>
 );
 
@@ -56,12 +74,10 @@ const App: React.FC = () => {
           />
         ))}
       </div>
-      <div className="RecommendedPick">
-        Recommended pick:
+      <div className="RecommendedPick">Recommended pick:
+      { Object.entries(getCounterPick(selected)) }
       </div>
-      <div className="Ban">
-        Recommended ban:
-      </div>
+      <div className="Ban">Recommended ban:</div>
     </div>
   );
 };
