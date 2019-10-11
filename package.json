@@ -11,7 +11,7 @@
     "@types/react-dom": "16.9.1",
     "dotaconstants": "6.18.0",
     "enzyme": "3.10.0",
-    "enzyme-adapter-react-16": "1.14.0",
+    "enzyme-adapter-react-16": "1.15.1",
     "eslint-plugin-react-hooks": "2.1.1",
     "react": "16.10.1",
     "react-dom": "16.10.1",
