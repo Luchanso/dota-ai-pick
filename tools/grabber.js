@@ -16,7 +16,7 @@ let counter = 0;
 const timeout = fn => new Promise((res) => {
   setTimeout(() => {
     fn().then(res);
-  }, 1000);
+  }, 2000);
 })
 
 const getData = index => {

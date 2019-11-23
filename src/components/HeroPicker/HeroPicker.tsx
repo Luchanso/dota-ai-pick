@@ -1,49 +1,53 @@
 import React, { useState } from "react";
-import "./App.css";
+import "./HeroPicker.css";
 import { heroes } from "dotaconstants";
-import data from "./data.json";
+import data from "../../data.json";
 
-const CDN = "http://cdn.dota2.com/";
+const CDN = "http://cdn.dota2.com";
 
-type IDs = (string | number)[];
+type IDs = (number)[];
 
 type HeroProps = {
-  heroId: string | number;
-  onClick: (id: string | number) => void;
+  heroId: number;
+  onClick?: (id: number) => void;
 };
 
-const getCounterPick = (selected: (string | number)[]) => {
-  const heroScore = Object.keys(heroes).reduce(
-    (res, key) => {
-      res[key] = 0;
-      return res;
-    },
-    {} as any
-  );
+const findHeroById = (id: number) => data.find(hero => hero.hero === id);
 
-   return selected.reduce((score, heroId) => {
-    const disadvantage = (data.find(
-      item => item.hero.toString() === heroId
-    ) as any).disadvantage;
+const getCounterPick = (selected: (number)[]) => {
 
-    return disadvantage.map(
-      ({ id, performance }: { id: string; performance: string }) => {
-        score[id] += parseFloat(performance);
+  const result = selected.map(heroNumber => {
+    const hero = findHeroById(heroNumber);
 
-        return score;
-      }
-    );
-  }, heroScore);
+    if (!hero) {
+      throw new Error('Hero not found');
+    }
+
+    const top5 = hero.disadvantage.slice(0, 5);
+
+    return top5;
+  });
+
+  return result.map((heroes, index) => {
+    return (
+      <div key={selected[index]}>
+        <Hero heroId={selected[index]} />
+        <hr />
+        { heroes.map(hero => <Hero heroId={hero.id} key={hero.id} />) }
+        <br />
+      </div>
+    )
+  });
 };
 
-const Hero = ({ heroId, onClick }: HeroProps) => (
+const Hero = ({ heroId, onClick = () => {} }: HeroProps) => (
   <div className="Hero" onClick={() => onClick(heroId)}>
     <img src={CDN + heroes[heroId].img} className="HeroImage" alt="hero" />
     <p className="HeroName">{heroes[heroId].localized_name}</p>
   </div>
 );
 
-const App: React.FC = () => {
+export const HeroPicker = () => {
   const [selected, selectHeroes] = useState([] as IDs);
 
   return (
@@ -75,11 +79,9 @@ const App: React.FC = () => {
         ))}
       </div>
       <div className="RecommendedPick">Recommended pick:
-      { Object.entries(getCounterPick(selected)) }
+      {getCounterPick(selected)}
       </div>
       <div className="Ban">Recommended ban:</div>
     </div>
   );
 };
-
-export default App;

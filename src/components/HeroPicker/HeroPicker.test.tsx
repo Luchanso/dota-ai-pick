@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import App from './App';
+import HeroPicker from './HeroPicker';
 
 it('renders without crashing', () => {
-  shallow(<App />);
+  shallow(<HeroPicker />);
 });
