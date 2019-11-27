@@ -3715,10 +3715,10 @@ dot-prop@^4.1.1:
   dependencies:
     is-obj "^1.0.0"
 
-dotaconstants@6.18.0:
-  version "6.18.0"
-  resolved "https://registry.yarnpkg.com/dotaconstants/-/dotaconstants-6.18.0.tgz#2b7c857ae4b78b21ea29c9f392c2479938e7faea"
-  integrity sha512-xisAq/hn4zI0i3Hdx5Zjv+YpjybtjLZLu68IXiuhMPvNqLykJSzAW0gsY7np2w9rm0OzTeADXq78VX3pEGEHuw==
+dotaconstants@6.22.0:
+  version "6.22.0"
+  resolved "https://registry.yarnpkg.com/dotaconstants/-/dotaconstants-6.22.0.tgz#a3b772cd59fe2ef818ce7db6cca8d8e9b025ece4"
+  integrity sha512-bUZIYZAUY91Lbf2pOXjGGN6ONo+AjyNx+778b+PjSqEXLSgpClS0EjJ5JGYcLeH6PN5l2WdDpXGj+XB0vuBNzA==
 
 dotenv-expand@5.1.0:
   version "5.1.0"
